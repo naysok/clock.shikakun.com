@@ -72,6 +72,12 @@ body {
   background-size: 0 100%;
 }
 
+a,
+a:link,
+a:visited {
+  color: inherit
+}
+
 #view.off {
   color: #039e41;
   background-image: none;
@@ -81,12 +87,6 @@ body {
 #view.on {
   color: #fff;
   background-color: #039e41;
-}
-
-a,
-a:link,
-a:visited {
-  color: #039e41;
 }
 
 #view.on.over {
