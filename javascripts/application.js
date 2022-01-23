@@ -1,6 +1,6 @@
 var status, timerInterval, currentProgress, currentSec, countSec = 180;
 
-var urlQueryParam = function(name) {
+var urlQueryParam = function (name) {
   var vars = {};
   var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
   for (var i = 0; i < hashes.length; i++) {
@@ -14,7 +14,7 @@ if (!isNaN(urlQueryParam('sec'))) {
   countSec = urlQueryParam('sec');
 }
 
-$(function() {
+$(function () {
   setStatus('off');
   print(countSec);
 
@@ -25,6 +25,16 @@ $(function() {
 
   $('#button-plus').click(function () {
     countSec = countSec + 60;
+    print(countSec);
+  });
+
+  $('#button-minus-sec').click(function () {
+    countSec = countSec - 30;
+    print(countSec);
+  });
+
+  $('#button-plus-sec').click(function () {
+    countSec = countSec + 30;
     print(countSec);
   });
 
