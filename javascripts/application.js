@@ -38,20 +38,33 @@ $(function () {
     print(countSec);
   });
 
+  // Super reload
+  $('#button-reset').click(function () {
+    window.location.reload(true);
+    print("reload");
+  });
+
   $('#time').click(function () {
     touch();
   });
 });
 
 function touch() {
+
   if (status === 'on') {
     setStatus('off');
+
     $('.button').show();
+    $('.credit-show').show();
+
     clearInterval(timerInterval);
     print(countSec);
   } else {
     setStatus('on');
+    
     $('.button').hide();
+    $('.credit-show').hide();
+
     currentSec = countSec;
     timer();
     timerInterval = setInterval("timer()", 1000);
@@ -60,22 +73,36 @@ function touch() {
 
 function timer() {
   if (currentSec <= 0) {
-    clearInterval(timerInterval);
+    
+    // Stop
+    // clearInterval(timerInterval);
+
+    // Count up
+    currentProgress = Math.round((1 - currentSec / countSec) * 100);
+    
     $('#view').addClass('over');
   } else {
     currentProgress = Math.round((1 - currentSec / countSec) * 100);
     $('#view').css('background-size', currentProgress + '% 100%');
   }
+
   print(currentSec);
   currentSec--;
 }
 
 function print(sec) {
+  
+  console.log(["Sec :", sec])
+
   var s = sec % 60;
   var m = (sec - s) / 60;
-  var time = keepLength(m, 2) + ':' + keepLength(s, 2);
+
+  var time = keepLengthMin(m, sec) + ':' + keepLengthSec(s);
+  
+  console.log(["Timer :", time])
+
   $('#time').html(time);
-  document.title = time;
+  document.title = "Timer : " + time;
 }
 
 function setStatus(param) {
@@ -83,10 +110,44 @@ function setStatus(param) {
   $('#view').attr('class', param);
 }
 
-function keepLength(num, figures) {
+function keepLengthMin(num, sec) {
+
+  if (sec < 0){
+
+    var num = Math.abs(num)
+    var num = String(num);
+    // console.log(num)
+  
+    while (num.length < 2) {
+      num = '0' + num;
+    }
+  
+    num = "-" + num
+    return num;
+
+  } else {
+
+    var num = Math.abs(num)
+    var num = String(num);
+    // console.log(num)
+  
+    while (num.length < 2) {
+      num = '0' + num;
+    }
+
+    return num;
+  }
+}
+
+function keepLengthSec(num) {
+
+  var num = Math.abs(num)
   var num = String(num);
-  while (num.length < figures) {
+  // console.log(num)
+
+  while (num.length < 2) {
     num = '0' + num;
   }
+
   return num;
 }
